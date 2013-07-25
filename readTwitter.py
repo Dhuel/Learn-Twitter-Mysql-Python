@@ -1,19 +1,24 @@
 
-#TODO -Complete task 1 here
-#More stuff here 
-# Pretty sure i understand how to use modules but now i'm on the instillation part of it using pip
+#TODO -Complete task 5
 
-# i chose an api to use called tweet pony and i think i installed it correctly but im having probs applying it. I'm trying to get the usag example to work then understand more from there
 
 import tweetpony
-api = tweetpony.API(consumer_key = "abc", consumer_secret = "def", access_token = "ghi", access_token_secret = "jkl")
+api = tweetpony.API(consumer_key = "mXtSuwi5Nwx0MbgS3IQpA", consumer_secret = "m5Rxk3yxf9TNJ1Xybu4fkgCMfnOYSby0JzQvW3CKU", access_token = "1016496080-wcdc2W9l0GNaLSYScFJ9QQ6gG3TXURMDXw3eMy5", access_token_secret = "LerRfJOXxpmsgZTrDy3qzwHDPqzfv0KBjJhV0ePrE")
 user = api.user
-print "Hello, @%s!" % user.screen_name
-text = raw_input("What would you like to tweet? ")
-try:
-    api.update_status(status = text)
-except tweetpony.APIError as err:
-    print "Oops, something went wrong! Twitter returned error #%i and said: %s" % (err.code, err.description)
+def tweetqu():
+  text = raw_input("What would you like to tweet sir? ")
+  try:
+      api.update_status(status = text)
+  except tweetpony.APIError as err:
+      print "Sir, we seem to have an error. Twitter returned the error #%i and said: %s" % (err.code, err.description)
+  else:
+      print "Good job sir, your tweet has been posted"
+
+print "Hello sir, Jarvis is at your service. Would you like to post a tweet?"
+text0 = raw_input("")
+if (text0 =="Yes"):
+  tweetqu()
 else:
-    print "Yay! Your tweet has been sent!"
+ print "Good day sir"
+	
   
