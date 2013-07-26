@@ -22,8 +22,12 @@ else:
 
 print str( api.user.screen_name)+ " is the username."
 stu = "Hello"
-
-#360528573196550145
+'''
+*********************************************************************
+nes=xt project is to use this key to find post
+360528573196550145
+*********************************************************************
+'''
 my_stuff = api.user_timeline()
 l = 0
 for each_entry in (my_stuff):
