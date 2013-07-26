@@ -24,7 +24,7 @@ print str( api.user.screen_name)+ " is the username."
 stu = "Hello"
 '''
 *********************************************************************
-nes=xt project is to use this key to find post
+next project is to use this key to find post
 360528573196550145
 *********************************************************************
 '''
