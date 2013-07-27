@@ -12,31 +12,40 @@ def tweetqu():
       print "Sir, we seem to have an error. Twitter returned the error #%i and said: %s" % (err.code, err.description)
   else:
       print "Good job sir, your tweet has been posted"
-
+def printposts():
+  if (text1 == "Yes"):
+    my_stuff = api.user_timeline()
+    l = 0
+    for each_entry in (my_stuff):
+     pprint.pprint(my_stuff[l]['text'])
+     l = l +1
+     pprint.pprint(my_stuff[0])
 print "\nHello sir, Jarvis is at your service. Would you like to post a tweet?"
 text0 = raw_input("")
 if (text0 =="Yes"):
   tweetqu()
 else:
  print "Good day sir \n"
-
+text1 = raw_input("Would you like to see your posts? ")
+printposts()
+'''
+#used to print users screen name
 print str( api.user.screen_name)+ " is the username."
-stu = "Hello"
 '''
-*********************************************************************
-next project is to use this key to find post
-360528573196550145
-*********************************************************************
 '''
-my_stuff = api.user_timeline()
-l = 0
-for each_entry in (my_stuff):
-   pprint.pprint(my_stuff[l]['text'])
-   l = l +1
+#code segment to get status of a follower, only works if follower has posted on wall - potentially useful to check each status for keywords(flaw: only works on followers)
+my_followers = api.user.followers()
+pprint.pprint (my_followers[1]['status']['text'])
 '''
-my_tweet = api.user.followers()
-#my_tweet = api.get_status(id =1)
-#print "The tweet is %s" %(my_tweet)
+'''
+#Prints post based on the id number of the post
+get_idnum  = api.user_timeline()
+pprint.pprint( get_idnum[0]['id'])
+id_num = (get_idnum[0]['id'])
+my_tweet = api.get_status(id =id_num)
+pprint.pprint (my_tweet['text'])
+'''
+'''
 converted_json_to_dictionary = json.loads(my_tweet['json'])
 pprint.pprint(converted_json_to_dictionary['users'])
 '''
