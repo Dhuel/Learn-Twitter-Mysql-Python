@@ -46,6 +46,19 @@ my_tweet = api.get_status(id =id_num)
 pprint.pprint (my_tweet['text'])
 '''
 '''
+#gets texts form friends that you follow - useable for finding posts on relevant topics
+f_ids = api.friends_ids()
+pprint.pprint (f_ids)
+tweets = [api.user_timeline(user_id = id) for id in f_ids]
+pprint.pprint(tweets[0][0]['text'])
+'''
+
+
+'''
+potentially useful code
+friend_tl = api.user_timeline(user_id = friendsids)
+pprint.pprint(friend_tl[0])
+
 converted_json_to_dictionary = json.loads(my_tweet['json'])
 pprint.pprint(converted_json_to_dictionary['users'])
 '''
