@@ -28,16 +28,15 @@ def get_tweets():
   pprint.pprint(search[l]['text'])
   print "*******************************"
   l = l+1
-print "\nHello sir, Jarvis is at your service. Would you like to post a tweet?"
-text0 = raw_input("")
+text0 = raw_input("\nHello sir, Jarvis is at your service. Would you like to post a tweet?\n")
 if(text0 =="Yes"):
  tweetqu()
 else:
- text1 = raw_input("Would you like to see your posts? ")
+ text1 = raw_input("Would you like to see your posts?\n")
  if (text1 == "Yes"):
   printposts()
  else:
-  text3 = raw_input("Would you like to searh for specific tweets?")
+  text3 = raw_input("Would you like to searh for specific tweets?\n")
   if (text3 == 'Yes'):
    get_tweets()
   else:
