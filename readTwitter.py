@@ -19,15 +19,29 @@ def printposts():
     for each_entry in (my_stuff):
      pprint.pprint(my_stuff[l]['text'])
      l = l +1
-     pprint.pprint(my_stuff[0])
+def get_tweets():
+ text2 = raw_input("What topic would you like to receive posts about?")
+ search = api.search_tweets(q = text2)
+ l = 0
+ for each_entry in (search):
+  print "*******************************"
+  pprint.pprint(search[l]['text'])
+  print "*******************************"
+  l = l+1
 print "\nHello sir, Jarvis is at your service. Would you like to post a tweet?"
 text0 = raw_input("")
-if (text0 =="Yes"):
-  tweetqu()
+if(text0 =="Yes"):
+ tweetqu()
 else:
- print "Good day sir \n"
-text1 = raw_input("Would you like to see your posts? ")
-printposts()
+ text1 = raw_input("Would you like to see your posts? ")
+ if (text1 == "Yes"):
+  printposts()
+ else:
+  text3 = raw_input("Would you like to searh for specific tweets?")
+  if (text3 == 'Yes'):
+   get_tweets()
+  else:
+    print "Good day sir \n"
 '''
 #used to print users screen name
 print str( api.user.screen_name)+ " is the username."
