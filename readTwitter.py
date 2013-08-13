@@ -3,22 +3,55 @@
 import json
 import pprint 
 import tweetpony
+
+#We are just learning now. But tell me why its not a good idea to put credentials in Source Code Repositories when we chat
 api = tweetpony.API(consumer_key = "mXtSuwi5Nwx0MbgS3IQpA", consumer_secret = "m5Rxk3yxf9TNJ1Xybu4fkgCMfnOYSby0JzQvW3CKU", access_token = "1016496080-wcdc2W9l0GNaLSYScFJ9QQ6gG3TXURMDXw3eMy5", access_token_secret = "LerRfJOXxpmsgZTrDy3qzwHDPqzfv0KBjJhV0ePrE")
-def tweetqu():
-  text = raw_input("What would you like to tweet sir? ")
+
+def tweetqu_old():
+  text = raw_input("What would you like to tweet sir? ") 
   try:
       api.update_status(status = text)
   except tweetpony.APIError as err:
       print "Sir, we seem to have an error. Twitter returned the error #%i and said: %s" % (err.code, err.description)
   else:
       print "Good job sir, your tweet has been posted"
+
+
+#+1 for refactoring the tweetqu and removing  the raw_input from the method. Also get into the habit of writing comments in your code
+
+def tweetqu(text):
+    """
+    Put a description of what the method does here 
+    """
+  try:
+      api.update_status(status = text)
+  except tweetpony.APIError as err:
+      print "Sir, we seem to have an error. Twitter returned the error #%i and said: %s" % (err.code, err.description)
+  else:
+      print "Good job sir, your tweet has been posted, %s" %(text)
+
+
+
 def printposts():
-  if (text1 == "Yes"):
+    """
+    Prints the tweets from the users timeline
+    """
     my_stuff = api.user_timeline()
-    l = 0
+    for each_entry in (my_stuff):
+        pprint.pprint(my_stuff[l]['text'])
+
+
+def printposts_old_dh():
+  if (text1 == "Yes"): #text1 defined outside scope of method, globabl variable being used
+    my_stuff = api.user_timeline()
+    l = 0 #What is the purpose of this ?
     for each_entry in (my_stuff):
      pprint.pprint(my_stuff[l]['text'])
-     l = l +1
+     l = l +1 #What is the purpose of this
+
+
+
+#TODO refactor this method
 def get_tweets():
  text2 = raw_input("What topic would you like to receive posts about?")
  search = api.search_tweets(q = text2)
@@ -28,6 +61,10 @@ def get_tweets():
   pprint.pprint(search[l]['text'])
   print "*******************************"
   l = l+1
+
+
+
+#TODO figure out how to use python main()
 text0 = raw_input("\nHello sir, Jarvis is at your service. Would you like to post a tweet?\n")
 if(text0 =="Yes"):
  tweetqu()
@@ -41,6 +78,9 @@ else:
    get_tweets()
   else:
     print "Good day sir \n"
+
+
+
 '''
 #used to print users screen name
 print str( api.user.screen_name)+ " is the username."
