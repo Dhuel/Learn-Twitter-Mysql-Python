@@ -5,6 +5,7 @@ import pprint
 import tweetpony
 
 #We are just learning now. But tell me why its not a good idea to put credentials in Source Code Repositories when we chat
+# Because people can copy it and mess with the wrk we do?
 api = tweetpony.API(consumer_key = "mXtSuwi5Nwx0MbgS3IQpA", consumer_secret = "m5Rxk3yxf9TNJ1Xybu4fkgCMfnOYSby0JzQvW3CKU", access_token = "1016496080-wcdc2W9l0GNaLSYScFJ9QQ6gG3TXURMDXw3eMy5", access_token_secret = "LerRfJOXxpmsgZTrDy3qzwHDPqzfv0KBjJhV0ePrE")
 
 def tweetqu_old():
@@ -16,20 +17,18 @@ def tweetqu_old():
   else:
       print "Good job sir, your tweet has been posted"
 
-
 #+1 for refactoring the tweetqu and removing  the raw_input from the method. Also get into the habit of writing comments in your code
 
 def tweetqu(text):
     """
-    Put a description of what the method does here 
+Method used to post tweets
     """
-  try:
+    try:
       api.update_status(status = text)
-  except tweetpony.APIError as err:
+    except tweetpony.APIError as err:
       print "Sir, we seem to have an error. Twitter returned the error #%i and said: %s" % (err.code, err.description)
-  else:
+    else:
       print "Good job sir, your tweet has been posted, %s" %(text)
-
 
 
 def printposts():
@@ -37,23 +36,26 @@ def printposts():
     Prints the tweets from the users timeline
     """
     my_stuff = api.user_timeline()
+    l = 0
     for each_entry in (my_stuff):
         pprint.pprint(my_stuff[l]['text'])
+        l = l+1
 
 
 def printposts_old_dh():
   if (text1 == "Yes"): #text1 defined outside scope of method, globabl variable being used
     my_stuff = api.user_timeline()
     l = 0 #What is the purpose of this ?
+    # to loop through the posts, its a dictionary in an array or vice versa
     for each_entry in (my_stuff):
      pprint.pprint(my_stuff[l]['text'])
      l = l +1 #What is the purpose of this
+     # this increments l so that it finds the next post in the array
 
 
 
 #TODO refactor this method
-def get_tweets():
- text2 = raw_input("What topic would you like to receive posts about?")
+def get_tweets(text2):
  search = api.search_tweets(q = text2)
  l = 0
  for each_entry in (search):
@@ -67,7 +69,7 @@ def get_tweets():
 #TODO figure out how to use python main()
 text0 = raw_input("\nHello sir, Jarvis is at your service. Would you like to post a tweet?\n")
 if(text0 =="Yes"):
- tweetqu()
+ tweetqu(raw_input("What would you like to tweet?\n"))
 else:
  text1 = raw_input("Would you like to see your posts?\n")
  if (text1 == "Yes"):
@@ -75,7 +77,7 @@ else:
  else:
   text3 = raw_input("Would you like to searh for specific tweets?\n")
   if (text3 == 'Yes'):
-   get_tweets()
+   get_tweets(raw_input("What would you like to receive tweets about?\n"))
   else:
     print "Good day sir \n"
 
