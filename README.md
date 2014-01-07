@@ -1,7 +1,9 @@
 Learn-Twitter-Mysql-Python
 ==========================
 
-Peer Learning Twitter API ,Mysql, Python
+Special notice!!!!!!!!!
+A mysql database called CLDC with table called tweets must already be available.
+Will fix that in later code to automatically do it.
 
 Tasks
 
