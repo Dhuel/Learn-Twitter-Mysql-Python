@@ -1,19 +1,17 @@
 
 #Removed old code
+import csv
+import sys
 import json
 import pprint 
 import tweetpony
+import MySQLdb
 
-#We are just learning now. But tell me why its not a good idea to put credentials in Source Code Repositories when we chat
-# Because people can copy it and mess with the wrk we do?
+#Dev twitter information
 api = tweetpony.API(consumer_key = "mXtSuwi5Nwx0MbgS3IQpA", consumer_secret = "m5Rxk3yxf9TNJ1Xybu4fkgCMfnOYSby0JzQvW3CKU", access_token = "1016496080-wcdc2W9l0GNaLSYScFJ9QQ6gG3TXURMDXw3eMy5", access_token_secret = "LerRfJOXxpmsgZTrDy3qzwHDPqzfv0KBjJhV0ePrE")
 
-#+1 for refactoring the tweetqu and removing  the raw_input from the method. Also get into the habit of writing comments in your code
-
 def tweetqu(text):
-    """
-Method used to post tweets
-    """
+    """Method used to post tweets"""
     try:
       api.update_status(status = text)
     except tweetpony.APIError as err:
@@ -22,17 +20,30 @@ Method used to post tweets
       print "Good job sir, your tweet has been posted, %s" %(text)
 
 
-def printposts():
+def writeT():
     """
-    Prints the tweets from the users timeline
+   Writes to text file 
     """
+    db=MySQLdb.connect(host='localhost', user= 'root', passwd='cldc@dm!n')
+    cursor = db.cursor()
+    cursor.execute('USE CLDC')
     my_stuff = api.user_timeline()
-    l = 0 
+    l = 0
+    tweets =open('tweets.txt','w') #clear text file
+    tweets.close() 
     for each_entry in (my_stuff):
-        pprint.pprint(my_stuff[l]['text'])
+	dhuel = (my_stuff[l]['text'])
+	tweets = open("tweets.txt",'a')
+	tweets.write(dhuel+'\n')
+	tweets.close()
         l = l+1
-
-#TODO refactor this method
+def printposts():
+ my_stuff = api.user_timeline()
+ l = 0
+ for each_entry in (my_stuff):
+   pprint.pprint(my_stuff[l]['text'])
+   l = l+1
+ 
 def get_tweets(text2):
  search = api.search_tweets(q = text2)
  l = 0
@@ -42,23 +53,38 @@ def get_tweets(text2):
   print "*******************************"
   l = l+1
 
+#TODO Take text file and save it in the MYsql database
+#MYSQL database
+def editMySQL():
+ writeT()
+ mydb =MySQLdb.connect(host='localhost', user='root',passwd='cldc@dm!n',db='CLDC')
+ cursor =mydb.cursor()
+ cursor.execute("TRUNCATE tweets")
+ csv_data = csv.reader(file('tweets.txt'))
+ for row in csv_data:
+    tweet =row[0]
+    cursor.execute("INSERT INTO tweets VALUES (%r)" %tweet)
+ mydb.commit()
+ cursor.close()
+ print "Tweets have been added to database"
 
 def main():
- #TODO figure out how to use python main()
- #So basically what i understand is that the main allows the code to be imported without causing bad side effects. Apparently it automatically runs even if its imported as a module 
- text0 = raw_input("\nHello sir, Jarvis is at your service. Would you like to post a tweet?\n")
- if(text0 =="Yes"):
+ text0 = raw_input("\nHello sir, Jarvis is at your service. What would you like to do? \n1. Write a new tweet \n2. See your posts \n3. Search for specific tweet\n4. Write your tweets to a text file\n5. Save tweets in MySQL database\n6. Quit\n")
+ if(text0 =="1"):
   tweetqu(raw_input("What would you like to tweet?\n"))
+ elif(text0 =="2"):
+  printposts()
+ elif (text0 =="3"):
+  get_tweets(raw_input("What would you like to receive tweets about?\n"))
+ elif (text0 =="4"):
+  writeT()
+  print "Tweets have been written to tweets.txt"
+ elif (text0 =="5"):
+  editMySQL()
  else:
-  text1 = raw_input("Would you like to see your posts?\n")
-  if (text1 == "Yes"):
-   printposts()
-  else:
-   text3 = raw_input("Would you like to searh for specific tweets?\n")
-   if (text3 == 'Yes'):
-    get_tweets(raw_input("What would you like to receive tweets about?\n"))
-   else:
-     print "Good day sir \n"
+  sys.exit()  
+ print "Task complete!\n"
+ main()
 if __name__ == "__main__":
  main()
 
